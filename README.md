@@ -107,7 +107,7 @@ Se `schema.sql` for fullstendig DDL og `ER.pdf` for ER-modellen.
 
 ## 🧪 Testdata
 
-Testdata dekker en **3-dagers periode: 16.–18. mars 2025**, med fokus på:
+Testdata dekker en **3-dagers periode: 16.–18. mars 2026**, med fokus på:
 
 - 🚴 Alle **spinning**-aktiviteter på **Øya** treningssenter
 - 🚴 Alle **spinning**-aktiviteter på **Dragvoll** treningssenter
