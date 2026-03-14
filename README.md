@@ -4,26 +4,18 @@
 
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![NTNU](https://img.shields.io/badge/NTNU-00509E?style=for-the-badge&logo=data:image/png;base64,&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Under%20utvikling-yellow?style=for-the-badge)
+![NTNU](https://img.shields.io/badge/NTNU-00509E?style=for-the-badge&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Ferdig-green?style=for-the-badge)
 
 ---
 
 ## 👥 Gruppemedlemmer
 
-| Navn | NTNU-bruker |
-|------|-------------|
-| Andreas Bang-Olsen | - |
-| Tørres Lutnæs | - |
-| Mika Migliorini | - |
-
----
-
-## 📋 Om prosjektet
-
-TreningDB er et databasesystem for SiT Trening i Trondheim. Systemet håndterer booking av gruppetimer, registrering av oppmøte, svartelisting av brukere og statistikk over treningsaktivitet på tvers av flere treningssentre.
-
-Databasen er implementert i **SQLite** og applikasjonslogikken er skrevet i **Python**.
+| Navn |
+|------|
+| Andreas Bang-Olsen |
+| Tørres Lutnæs |
+| Mika Migliorini |
 
 ---
 
@@ -32,11 +24,13 @@ Databasen er implementert i **SQLite** og applikasjonslogikken er skrevet i **Py
 ```
 Prosjekt_269/
 │
-├── treningDB.db          # SQLite-databasefil (tom, klar for initialisering)
-├── schema.sql            # DDL-script: oppretter alle tabeller
-├── data.sql              # DML-script: setter inn testdata
-├── main.py               # Hovedprogram med alle brukstilfeller
-└── README.md             # Denne filen
+├── treningDB.db           # SQLite-databasefil (tom, klar for initialisering)
+├── schema.sql             # DDL-script: oppretter alle tabeller
+├── data.sql               # DML-script: setter inn testdata
+├── ER.pdf                 # ER-diagram fra del 1
+├── Kommentarer til ER.pdf # Kommentarer fra del 1
+├── main.py                # Hovedprogram med alle brukstilfeller|
+└── README.md              # Denne filen
 ```
 
 ---
@@ -45,44 +39,77 @@ Prosjekt_269/
 
 ### Krav
 
-- Python 3.x
+- Python 3.x (ingen eksterne biblioteker nødvendig)
 - SQLite3 (følger med Python)
 
-### Steg-for-steg
+### Steg 1 — Initialiser databasen
 
-**1. Klon repoet**
-```bash
-git clone git@github.com:andreasibo/Prosjekt_269.git
-cd Prosjekt_269
-```
+Kjør følgende kommandoer i terminalen fra prosjektmappen:
 
-**2. Opprett og initialiser databasen**
 ```bash
 sqlite3 treningDB.db < schema.sql
 sqlite3 treningDB.db < data.sql
 ```
 
-**3. Kjør programmet**
+### Steg 2 — Kjør programmet
+
 ```bash
 python main.py
 ```
 
+Du vil da se en meny med alle brukstilfeller.
+
 ---
 
-## 📌 Brukstilfeller
+## 📌 Brukstilfeller og eksempelinput
 
-Programmet tilbyr følgende brukstilfeller via en tekstbasert meny:
+### 1 — Book trening
+```
+Velg brukstilfelle: 1
+Epost: johnny@stud.ntnu.no
+Aktivitet: Spin60
+Tidspunkt (HH:MM:SS): 18:30:00
+```
 
-| # | Beskrivelse | Implementasjon |
-|---|-------------|----------------|
-| 1 | Legg inn treningssenter, saler, sykler, brukere, trenere og treninger | SQL |
-| 2 | Booking av trening for en bruker | Python + SQL |
-| 3 | Registrering av oppmøte | Python + SQL |
-| 4 | Ukeplan for alle treninger i uke 12 (16.–23. mars) | Python + SQL |
-| 5 | Personlig besøkshistorie for en bruker siden 1. januar 2026 | SQL |
-| 6 | Svartelisting av bruker ved 3 prikker innen 30 dager | Python + SQL |
-| 7 | Finn bruker(e) med flest gruppetimer en gitt måned | Python + SQL |
-| 8 | Finn par av studenter som har trent flest ganger sammen | SQL |
+### 2 — Registrer oppmøte
+```
+Velg brukstilfelle: 2
+Epost: johnny@stud.ntnu.no
+Gruppetime-id: 1107
+```
+
+### 3 — Ukeplan
+```
+Velg brukstilfelle: 3
+Startdag (mandag-søndag): mandag
+Ukenummer: 12
+```
+
+### 4 — Besøkshistorie
+```
+Velg brukstilfelle: 4
+Epost: johnny@stud.ntnu.no
+```
+
+### 5 — Svartelisting
+```
+Velg brukstilfelle: 5
+Epost: petter@stud.ntnu.no
+```
+> Petter Prikk har 3 prikker i systemet og vil bli svartelistet.
+> For å teste at svartelisting blokkerer booking, kjør brukstilfelle 1 med petter@stud.ntnu.no etterpå.
+
+### 6 — Flest gruppetimer
+```
+Velg brukstilfelle: 6
+Måned: mars
+```
+
+### 7 — Trener sammen
+```
+Velg brukstilfelle: 7
+```
+> Anne Borg og Jonas Nøland har besøkt treningssenter innen 30 sekunder av hverandre 3 ganger.
 
 ---
 
@@ -114,13 +141,3 @@ Testdata dekker en **3-dagers periode: 16.–18. mars 2026**, med fokus på:
 - Fasiliteter, saler og sykler for Øya treningssenter
 
 ---
-
-## 🤖 Bruk av KI
-
-Dette prosjektet har benyttet KI (Claude, Anthropic) som hjelpemiddel under utviklingen. Se egen KI-deklarasjon i innleveringsdokumentet for detaljer om hvilke deler som er generert, assistert eller egenprodusert.
-
----
-
-## 📄 Lisens
-
-Akademisk prosjekt — kun for intern bruk i TDT4145 ved NTNU.

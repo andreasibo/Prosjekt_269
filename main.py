@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 # Funksjon for å koble til databasen
 def koble_til():
-    con = sqlite3.connect("trening.DB")
+    con = sqlite3.connect("treningDB.db")
     cursor = con.cursor()
     return con, cursor
 
@@ -70,7 +70,7 @@ def brukstilfelle_2(epost, aktivitet, tidspunkt):
         con.close()
         return
     
-        # Sjekker kapasitet i salen for gruppetimen
+    # Sjekker kapasitet i salen for gruppetimen
     cursor.execute("""
                    SELECT s.plasser, COUNT(p.bruker_id)
                    FROM gruppetime g
@@ -126,6 +126,7 @@ def brukstilfelle_2(epost, aktivitet, tidspunkt):
     # Stenger tilkoblingen
     con.commit()
     con.close()
+    print("Trening booket!")
 
     return
 
@@ -178,7 +179,8 @@ def brukstilfelle_3(brukernavn, aktivitet):
         con.close()
         return
 
-    # Lager ett samlet datetime-objekt for treningsstart
+    # Lager ett samlet datetime-objekt for treningsstart 
+    # GENERERT AV KI
     treningsstart = datetime.strptime(
         f"{gruppetime_info[0]} {gruppetime_info[1]}",
         "%Y-%m-%d %H:%M:%S"
@@ -270,6 +272,7 @@ def brukstilfelle_4(startdag, uke):
     if not resultater:
         print("Ingen treninger funnet i valgt periode.")
     else:
+        # GENERERT AV KI
         print(f"{'Dato':<12} {'Tid':<8} {'Aktivitet':<20} {'Senter':<15} {'Sal':<10} {'Instruktør'}")
         print("-" * 75)
         for rad in resultater:
@@ -316,8 +319,8 @@ def brukstilfelle_5(epost):
     # Sjekker om det finnes besøkshistorie for brukeren, sier fra hvis ikke
     if not resultater:
         print("Ingen besøkshistorie funnet for denne brukeren.")
-        con.close()
     else:
+        # GENERERT AV KI
         print(f"{'Dato':<12} {'Tid':<8} {'Aktivitet':<20} {'Senter'}")
         print("-" * 60)
         for rad in resultater:
@@ -437,6 +440,7 @@ def brukstilfelle_7(maned):
     maks = resultater[0][2]
     vinnere = [rad for rad in resultater if rad[2] == maks]
 
+    # GENERERT AV KI
     print(f"\nPersoner med flest gruppetimer i {maned} {ar} ({maks} treninger):")
     print("-" * 50)
     for rad in vinnere:
@@ -450,6 +454,7 @@ def brukstilfelle_8():
     # Kobler til databasen
     con, cursor = koble_til()
 
+    # ABS()-uttrykket er GENERERT AV KI
     cursor.execute("""
                    SELECT b1.epost, b2.epost, COUNT(*) AS treninger_sammen
                    FROM senterbesøk s1
@@ -477,7 +482,53 @@ def brukstilfelle_8():
     con.close()
 
     
+def main():
+    # GENERERT AV KI
+    print("=== TreningDB ===")
+    while True:
+        print("\n1. Book trening")
+        print("2. Registrer oppmøte")
+        print("3. Ukeplan")
+        print("4. Besøkshistorie")
+        print("5. Svartelistering")
+        print("6. Flest gruppetimer")
+        print("7. Trener sammen")
+        print("0. Avslutt")
 
+        valg = input("\nVelg brukstilfelle: ")
+
+        if valg == "1":
+            epost = input("Epost: ")
+            aktivitet = input("Aktivitet: ")
+            tidspunkt = input("Tidspunkt (HH:MM:SS): ")
+            brukstilfelle_2(epost, aktivitet, tidspunkt)
+        elif valg == "2":
+            epost = input("Epost: ")
+            aktivitet = int(input("Gruppetime-id: "))
+            brukstilfelle_3(epost, aktivitet)
+        elif valg == "3":
+            startdag = input("Startdag (mandag-søndag): ").lower()
+            uke = int(input("Ukenummer: "))
+            brukstilfelle_4(startdag, uke)
+        elif valg == "4":
+            epost = input("Epost: ")
+            brukstilfelle_5(epost)
+        elif valg == "5":
+            epost = input("Epost: ")
+            brukstilfelle_6(epost)
+        elif valg == "6":
+            maned = input("Måned: ").lower()
+            brukstilfelle_7(maned)
+        elif valg == "7":
+            brukstilfelle_8()
+        elif valg == "0":
+            print("Avslutter...")
+            break
+        else:
+            print("Ugyldig valg, prøv igjen.")
+
+if __name__ == "__main__":
+    main()
 
 
 
