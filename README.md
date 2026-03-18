@@ -24,13 +24,15 @@
 ```
 Prosjekt_269/
 │
-├── treningDB.db           # SQLite-databasefil (tom, klar for initialisering)
-├── schema.sql             # DDL-script: oppretter alle tabeller
-├── data.sql               # DML-script: setter inn testdata
-├── ER.pdf                 # ER-diagram fra del 1
-├── Kommentarer til ER.pdf # Kommentarer fra del 1
-├── main.py                # Hovedprogram med alle brukstilfeller|
-└── README.md              # Denne filen
+├── treningDB.db             # SQLite-databasefil (tom, klar for initialisering)
+├── Kommentarer til del2.pdf # Antagelser for del 2 og KI-erklæring
+├── output.txt               # Output fra brukerhistorienes spørringer 
+├── schema.sql               # DDL-script: oppretter alle tabeller
+├── data.sql                 # DML-script: setter inn testdata
+├── ER.pdf                   # ER-diagram fra del 1
+├── Kommentarer til ER.pdf   # Kommentarer fra del 1
+├── main.py                  # Hovedprogram med alle brukstilfeller
+└── README.md                # Denne filen
 ```
 
 ---
@@ -54,12 +56,18 @@ sqlite3 treningDB.db < data.sql
 ### Steg 2 — Kjør programmet
 
 ```bash
-python main.py
+python3 main.py
 ```
 
 Du vil da se en meny med alle brukstilfeller.
 
 ---
+
+## 📄 Output
+
+Tekstlig output fra alle brukstilfeller ligger vedlagt i `output.txt`. 
+For å reprodusere resultatene, kjør programmet som beskrevet over og 
+følg eksempelinputen for hvert brukstilfelle.
 
 ## 📌 Brukstilfeller og eksempelinput
 
@@ -68,10 +76,14 @@ Du vil da se en meny med alle brukstilfeller.
 Velg brukstilfelle: 1
 Epost: johnny@stud.ntnu.no
 Aktivitet: Spin60
+Dato (YYYY-MM-DD): 2026-03-17
 Tidspunkt (HH:MM:SS): 18:30:00
 ```
 
 ### 2 — Registrer oppmøte
+> **NB:** Brukstilfelle 2 sjekker at oppmøte registreres senest 5 minutter før treningsstart. 
+> Siden testdataen er i fortiden vil denne sjekken alltid slå ut, og brukeren vil få prikk. 
+> Dette er korrekt oppførsel, for å teste vellykket oppmøte må tidspunktet være i fremtiden.
 ```
 Velg brukstilfelle: 2
 Epost: johnny@stud.ntnu.no

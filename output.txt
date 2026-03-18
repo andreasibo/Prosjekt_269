@@ -1,0 +1,126 @@
+=== TreningDB ===
+
+1. Book trening
+2. Registrer oppmøte
+3. Ukeplan
+4. Besøkshistorie
+5. Svartelistering
+6. Flest gruppetimer
+7. Trener sammen
+0. Avslutt
+
+Velg brukstilfelle: Epost: Aktivitet: Dato (YYYY-MM-DD): Tidspunkt (HH:MM:SS): Trening booket!
+
+1. Book trening
+2. Registrer oppmøte
+3. Ukeplan
+4. Besøkshistorie
+5. Svartelistering
+6. Flest gruppetimer
+7. Trener sammen
+0. Avslutt
+
+Velg brukstilfelle: Epost: Gruppetime-id: For sent å registrere oppmøte, du får prikk
+
+1. Book trening
+2. Registrer oppmøte
+3. Ukeplan
+4. Besøkshistorie
+5. Svartelistering
+6. Flest gruppetimer
+7. Trener sammen
+0. Avslutt
+
+Velg brukstilfelle: Startdag (mandag-søndag): Ukenummer: Dato         Tid      Aktivitet            Senter          Sal        Instruktør
+---------------------------------------------------------------------------
+2026-03-16   07:00:00 Spin 4x4             Øya treningssenter Sykkelsal  Eirin H.
+2026-03-16   16:30:00 Spin 4x4             Dragvoll idrettssenter Spinningsal Siri M. L.
+2026-03-16   16:30:00 Spin45               Øya treningssenter Sykkelsal  Jorunn B. B.
+2026-03-16   17:40:00 Spin 8x3             Øya treningssenter Sykkelsal  Ramona L. S.
+2026-03-16   19:00:00 Spin60               Øya treningssenter Sykkelsal  Trine R.
+2026-03-17   07:00:00 Spin 8x3             Øya treningssenter Sykkelsal  Nora D.
+2026-03-17   18:30:00 Spin60               Øya treningssenter Sykkelsal  Håkon W.
+2026-03-17   19:45:00 Spin 4x4             Øya treningssenter Sykkelsal  Hanne H.
+2026-03-18   16:15:00 Spin60               Øya treningssenter Sykkelsal  Nora D.
+2026-03-18   16:30:00 Spin45               Dragvoll idrettssenter Spinningsal Ada J.R.
+2026-03-18   17:30:00 Spin 4x4             Øya treningssenter Sykkelsal  Sindre K. S.
+2026-03-18   18:30:00 Spin45               Øya treningssenter Sykkelsal  Kaja S.
+2026-03-18   19:30:00 Spin 8x3             Øya treningssenter Sykkelsal  Amalie M. H.
+2026-03-19   07:30:00 Spin 8x3             Øya treningssenter Sykkelsal  Siri M. L.
+2026-03-19   16:45:00 Spin45               Øya treningssenter Sykkelsal  Jorunn B. B.
+2026-03-19   17:45:00 Spin60               Øya treningssenter Sykkelsal  Natalie D. H.
+2026-03-20   06:30:00 Spin45               Øya treningssenter Sykkelsal  Kaja S.
+2026-03-20   16:30:00 Spin 8x3             Øya treningssenter Sykkelsal  Rikke S.W
+2026-03-21   10:00:00 Spin60               Øya treningssenter Sykkelsal  Siri M. L.
+2026-03-21   12:00:00 Spin 8x3             Øya treningssenter Sykkelsal  Sindre K. S.
+2026-03-22   12:15:00 Spin45               Øya treningssenter Sykkelsal  Jorunn B. B.
+
+1. Book trening
+2. Registrer oppmøte
+3. Ukeplan
+4. Besøkshistorie
+5. Svartelistering
+6. Flest gruppetimer
+7. Trener sammen
+0. Avslutt
+
+Velg brukstilfelle: Epost: Dato         Tid      Aktivitet            Senter
+------------------------------------------------------------
+2026-01-13   18:30:00 Spin60               Øya treningssenter
+2026-01-20   18:30:00 Spin60               Øya treningssenter
+2026-01-27   18:30:00 Spin60               Øya treningssenter
+2026-02-04   16:15:00 Spin60               Øya treningssenter
+2026-02-11   19:30:00 Spin 8x3             Øya treningssenter
+2026-02-17   18:30:00 Spin60               Øya treningssenter
+2026-02-24   18:30:00 Spin60               Øya treningssenter
+2026-03-04   17:30:00 Spin 4x4             Øya treningssenter
+
+1. Book trening
+2. Registrer oppmøte
+3. Ukeplan
+4. Besøkshistorie
+5. Svartelistering
+6. Flest gruppetimer
+7. Trener sammen
+0. Avslutt
+
+Velg brukstilfelle: Epost: Brukeren petter@stud.ntnu.no er nå svartelistet i 30 dager.
+
+1. Book trening
+2. Registrer oppmøte
+3. Ukeplan
+4. Besøkshistorie
+5. Svartelistering
+6. Flest gruppetimer
+7. Trener sammen
+0. Avslutt
+
+Velg brukstilfelle: Måned: 
+Personer med flest gruppetimer i mars 2026 (3 treninger):
+--------------------------------------------------
+Ola Nordmann         ola.nordmann@gmail.com
+
+1. Book trening
+2. Registrer oppmøte
+3. Ukeplan
+4. Besøkshistorie
+5. Svartelistering
+6. Flest gruppetimer
+7. Trener sammen
+0. Avslutt
+
+Velg brukstilfelle: 
+Bruker 1                  Bruker 2                  Treninger sammen
+-----------------------------------------------------------------
+anne.borg@gmail.com       jonas.noeland@gmail.com   3
+
+1. Book trening
+2. Registrer oppmøte
+3. Ukeplan
+4. Besøkshistorie
+5. Svartelistering
+6. Flest gruppetimer
+7. Trener sammen
+0. Avslutt
+
+Velg brukstilfelle: Avslutter...

@@ -110,10 +110,9 @@ INSERT INTO påmelding VALUES
     (4, 905, '18:24:37'), 
     (4, 906, '18:20:04'),
     (4, 907, '18:24:09'),
-    (4, 908, '18:22:09'),
-    (4, 1107, '18:19:48'); --Johnny sin spinning 17.mars
-
---Senterbesøk hvor Anne og Jonas trente sammen
+    (4, 908, '18:22:09');
+    
+-- Senterbesøk hvor Anne og Jonas trente sammen
 INSERT INTO senterbesøk VALUES
     ('Gløshaugen idrettsbygg', 6, '2026-02-19 19:28:02'),
     ('Gløshaugen idrettsbygg', 7, '2026-02-19 19:28:07'),
