@@ -8,7 +8,7 @@ def koble_til():
     return con, cursor
 
 # Funksjon for brukstilfelle 2, booking av trening
-def brukstilfelle_2(epost, aktivitet, tidspunkt):
+def brukstilfelle_2(epost, aktivitet, dato, tidspunkt):
     # Kobler til databasen
     con, cursor = koble_til()
 
@@ -16,16 +16,16 @@ def brukstilfelle_2(epost, aktivitet, tidspunkt):
     cursor.execute("""
                    SELECT * 
                    FROM gruppetime 
-                   WHERE aktivitetstype_navn =:aktivitet AND starttid =:starttid
+                   WHERE aktivitetstype_navn =:aktivitet AND starttid =:starttid AND dato =:dato
                    """, 
-                   {"aktivitet": aktivitet, "starttid": tidspunkt}
+                   {"aktivitet": aktivitet, "starttid": tidspunkt, "dato": dato}
     )
 
     # Sjekker om gruppetimen finnes, sier ifra hvis ikke
     gruppetime = cursor.fetchone()
     if gruppetime is None:
         con.close()
-        print('Treningen finnes ikke')
+        print("Treningen finnes ikke")
         return
     
     # Henter ut bruker fra databasen
@@ -40,13 +40,14 @@ def brukstilfelle_2(epost, aktivitet, tidspunkt):
 
     # Sjekker om brukeren finnes, sier fra hvis ikke
     if bruker is None:
-        print('Brukeren finnes ikke')
+        print("Brukeren finnes ikke")
         con.close()
         return
     
     # Sjekker om brukeren er svartelista
     cursor.execute("""
-                    SELECT COUNT(*) FROM svartelista
+                    SELECT COUNT(*) 
+                    FROM svartelista
                     WHERE bruker_id = :bruker_id
                     AND start_dato >= DATE('now', '-30 days')
                     """, 
@@ -60,11 +61,13 @@ def brukstilfelle_2(epost, aktivitet, tidspunkt):
     
     # Sjekker om brukeren allerede er påmeldt
     cursor.execute("""
-                   SELECT * FROM påmelding 
+                   SELECT * 
+                   FROM påmelding 
                    WHERE bruker_id = :bruker_id AND gruppetime_id = :gruppetime_id
                    """, 
                    {"bruker_id": bruker[0], "gruppetime_id": gruppetime[0]})
     
+    # Sier ifra hvis brukeren allerede er påmeldt
     if cursor.fetchone() is not None:
         print("Brukeren er allerede påmeldt denne treningen.")
         con.close()
@@ -83,6 +86,7 @@ def brukstilfelle_2(epost, aktivitet, tidspunkt):
 
     kapasitet = cursor.fetchone()
 
+    # Sier ifra hvis kapasitet ikke kan hentes
     if kapasitet is None:
         print("Kunne ikke hente kapasitet for treningen.")
         con.close()
@@ -91,12 +95,14 @@ def brukstilfelle_2(epost, aktivitet, tidspunkt):
     maks_plasser = kapasitet[0]
     antall_påmeldte = kapasitet[1]
 
+    # Sier ifra hvis timen er fullbooka
     if antall_påmeldte >= maks_plasser:
         print("Treningen er fullbooket.")
         con.close()
         return
     
     # Sjekker om brukeren allerede er påmeldt en overlappende gruppetime
+    # KI GENERERT de to siste AND linjene
     cursor.execute("""
                    SELECT g2.id, g2.aktivitetstype_navn, g2.dato, g2.starttid
                    FROM påmelding p
@@ -104,12 +110,13 @@ def brukstilfelle_2(epost, aktivitet, tidspunkt):
                    JOIN gruppetime g2 ON g2.id = p.gruppetime_id
                    WHERE p.bruker_id = :bruker_id
                    AND g1.dato = g2.dato
-                   AND time(g1.starttid) < time(g2.starttid, '+' || g2.varighet_minutter || ' minutes')
+                   AND time(g1.starttid) < time(g2.starttid, '+' || g2.varighet_minutter || ' minutes') 
                    AND time(g2.starttid) < time(g1.starttid, '+' || g1.varighet_minutter || ' minutes')
                    """, {"bruker_id": bruker[0],"ny_gruppetime_id": gruppetime[0]})
 
     overlapp = cursor.fetchone()
 
+    # Sier ifra hvis brukeren er meldt på overlappende gruppetime
     if overlapp is not None:
         print("Brukeren er allerede påmeldt en overlappende gruppetime.")
         con.close()
@@ -146,7 +153,7 @@ def brukstilfelle_3(brukernavn, aktivitet):
     
     # Sjekker om brukeren finnes, sier fra hvis ikke
     if bruker is None:
-        print('Brukeren finnes ikke')
+        print("Brukeren finnes ikke")
         con.close()
         return
     
@@ -159,8 +166,9 @@ def brukstilfelle_3(brukernavn, aktivitet):
                    {"bruker_id": bruker[0], "gruppetime_id": aktivitet})
     påmelding = cursor.fetchone()
     
+    # Sier ifra hvis brukeren ikke er meldt på treningen
     if påmelding is None:
-        print('Brukeren er ikke påmeldt denne treningen')
+        print("Brukeren er ikke påmeldt denne treningen")
         con.close()
         return
     
@@ -174,6 +182,7 @@ def brukstilfelle_3(brukernavn, aktivitet):
     
     gruppetime_info = cursor.fetchone()
 
+    # Sier ifra hvis gruppetimen ikke finnes
     if gruppetime_info is None:
         print("Treningen finnes ikke")
         con.close()
@@ -199,6 +208,7 @@ def brukstilfelle_3(brukernavn, aktivitet):
                        """,
                        {"bruker_id": bruker[0], "gruppetime_id": aktivitet})
         
+        # Hvis vedkommende ikke har fått prikk, gis prikk nå
         if cursor.fetchone() is None:
             cursor.execute("""
                            INSERT INTO prikk
@@ -297,22 +307,22 @@ def brukstilfelle_5(epost):
 
     # Sjekker om brukeren finnes, sier fra hvis ikke
     if bruker is None:
-        print('Brukeren finnes ikke')
+        print("Brukeren finnes ikke")
         con.close()
         return
     
     # Henter ut besøkshistorie for brukeren
     cursor.execute("""
                    SELECT DISTINCT g.dato, g.starttid, g.aktivitetstype_navn, s.sit_senter_navn
-                    FROM påmelding p
-                    JOIN gruppetime g ON p.gruppetime_id = g.id
-                    JOIN sal s ON g.sal_id = s.id
-                    JOIN bruker b ON p.bruker_id = b.id
-                    WHERE b.epost = :epost
-                    AND p.oppmøte_tidspunkt IS NOT NULL
-                    AND g.dato >= '2026-01-01'
-                    """,
-                    {"epost": epost})
+                   FROM påmelding p
+                   JOIN gruppetime g ON p.gruppetime_id = g.id
+                   JOIN sal s ON g.sal_id = s.id
+                   JOIN bruker b ON p.bruker_id = b.id
+                   WHERE b.epost = :epost
+                   AND p.oppmøte_tidspunkt IS NOT NULL
+                   AND g.dato >= '2026-01-01'
+                   """,
+                   {"epost": epost})
     
     resultater = cursor.fetchall()
 
@@ -345,10 +355,11 @@ def brukstilfelle_6(epost):
 
     # Sjekker om brukeren finnes, sier fra hvis ikke
     if bruker is None:
-        print('Brukeren finnes ikke')
+        print("Brukeren finnes ikke")
         con.close()
         return
     
+    # Henter antall prikker de siste 30 dagene
     cursor.execute("""
                    SELECT COUNT(*)
                    FROM prikk
@@ -359,6 +370,7 @@ def brukstilfelle_6(epost):
     
     antall_prikker = cursor.fetchone()[0]
     
+    # Sier ifra hvis brukeren har under 3 prikker
     if antall_prikker < 3: 
         print(f"Brukeren har kun {antall_prikker} prikker siste 30 dager, svartelisting krever 3.")
         con.close()
@@ -373,6 +385,7 @@ def brukstilfelle_6(epost):
                    """,
                    {"bruker_id": bruker[0]})
     
+    # Sier ifra hvis brukeren allerede er svartelistet
     if cursor.fetchone()[0] > 0:
         print(f"Brukeren {epost} er allerede svartelistet.")
         con.close()
@@ -417,6 +430,7 @@ def brukstilfelle_7(maned):
     
     ar = str(datetime.now().year)
     
+    # Henter bruker med flest treninger
     cursor.execute("""
                     SELECT b.navn, b.epost, COUNT(*) AS antall
                     FROM påmelding p
@@ -432,11 +446,13 @@ def brukstilfelle_7(maned):
 
     resultater = cursor.fetchall()
     
+    # Sier ifra hvis ingen resultater blir funnet
     if not resultater:
         print(f"Ingen treninger funnet for {maned} {ar}.")
         con.close()
         return
     
+    # Sjekker om det er fler som har flest treninger i en måned
     maks = resultater[0][2]
     vinnere = [rad for rad in resultater if rad[2] == maks]
 
@@ -469,11 +485,13 @@ def brukstilfelle_8():
     
     resultater = cursor.fetchall()
 
+    # Sier ifra hvis ingen har trent sammen
     if not resultater:
         print("Ingen par funnet som har trent sammen.")
         con.close()
         return
     
+    # GENERERT AV KI    
     print(f"\n{'Bruker 1':<25} {'Bruker 2':<25} {'Treninger sammen'}")
     print("-" * 65)
     for rad in resultater:
@@ -483,7 +501,7 @@ def brukstilfelle_8():
 
     
 def main():
-    # GENERERT AV KI
+    # GENERERT AV KI første 10 linjene
     print("=== TreningDB ===")
     while True:
         print("\n1. Book trening")
@@ -500,8 +518,9 @@ def main():
         if valg == "1":
             epost = input("Epost: ")
             aktivitet = input("Aktivitet: ")
+            dato = input("Dato (YYYY-MM-DD): ")
             tidspunkt = input("Tidspunkt (HH:MM:SS): ")
-            brukstilfelle_2(epost, aktivitet, tidspunkt)
+            brukstilfelle_2(epost, aktivitet, dato, tidspunkt)
         elif valg == "2":
             epost = input("Epost: ")
             aktivitet = int(input("Gruppetime-id: "))

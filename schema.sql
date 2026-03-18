@@ -1,6 +1,6 @@
 -- Grunnleggende informasjon (Senter og fasiliter)
 CREATE TABLE sit_senter (
-    navn VARCHAR(20) PRIMARY KEY, --Distinkte navn på sit-sentre
+    navn VARCHAR(30) PRIMARY KEY, --Distinkte navn på sit-sentre
     addresse VARCHAR(100),
     kontakt VARCHAR(15),
     beskrivelse VARCHAR(255)
