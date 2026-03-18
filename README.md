@@ -66,7 +66,7 @@ Du vil da se en meny med alle brukstilfeller.
 ## 📄 Output
 
 Tekstlig output fra alle brukstilfeller ligger vedlagt i `output.txt`. 
-For å reprodusere resultatene, kjør programmet som beskrevet over og 
+For å reprodusere resultatene, kjør programmet som beskrevet under og 
 følg eksempelinputen for hvert brukstilfelle.
 
 ## 📌 Brukstilfeller og eksempelinput
